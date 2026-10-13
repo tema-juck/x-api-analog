@@ -1,6 +1,8 @@
-def main():
-    print("Hello from x-api-analog!")
+from fastapi import FastAPI
+
+app = FastAPI()
 
 
-if __name__ == "__main__":
-    main()
+@app.get("/")
+def root() -> dict:
+    return {"Score": 10}
