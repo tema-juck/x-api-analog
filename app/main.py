@@ -5,7 +5,7 @@ app = FastAPI(
     title="X-Analog API",
     description="API for pet-project",
     version="0.1.0",
-    openapi_tags=[{"name": "Posts", "description": "Control your Projects"}],
+    openapi_tags=[{"name": "Posts", "description": "Control your Posts"}],
 )
 
 

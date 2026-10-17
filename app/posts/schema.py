@@ -12,6 +12,11 @@ class PostBase(BaseModel):
         return value
 
 
+class PostResponse(BaseModel):
+    post_id: int
+    content: str
+
+
 class PostCreateRequest(PostBase):
     pass
 
