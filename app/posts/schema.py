@@ -28,3 +28,7 @@ class PostUpdateRequest(PostBase):
 class PostUpdateResponse(BaseModel):
     post_id: int
     content: str
+
+
+class PostDeleteRespone(BaseModel):
+    post_id: int
