@@ -1,16 +1,18 @@
 from itertools import count
 from typing import Annotated
 
-from fastapi import APIRouter, Path
+from fastapi import APIRouter, Depends, Path
 
 from .schema import (
     PostCreateRequest,
     PostCreateResponse,
     PostDeleteRespone,
+    PostPath,
     PostResponse,
     PostUpdateRequest,
     PostUpdateResponse,
 )
+from .service import PostServiceDeps
 
 router = APIRouter(prefix="/v1/posts", tags=["Posts"])
 PostId = Annotated[int, Path(gt=0)]
@@ -23,8 +25,9 @@ _post_ids = count(1)
     summary="Get a post by id",
     description="""This endpoint helps you to get a post by id""",
 )
-def get_id(post_id: PostId) -> PostResponse:
-    return PostResponse(post_id=post_id, content="")
+def get_post(service: PostServiceDeps, path: PostPath = Depends()):  # noqa: B008
+    res = service.get_post(path.post_id)
+    return PostResponse(post_id=res)
 
 
 @router.post(
