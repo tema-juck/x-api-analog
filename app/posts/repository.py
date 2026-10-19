@@ -1,0 +1,15 @@
+from typing import Annotated
+
+from fastapi import Depends
+
+
+class PostRepository:
+    def get_by_id(self, post_id: int):
+        return post_id
+
+
+def get_post_repository():
+    return PostRepository()
+
+
+PostRepositoryDeps = Annotated[PostRepository, Depends(get_post_repository)]

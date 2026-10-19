@@ -1,4 +1,8 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
+
+
+class PostPath(BaseModel):
+    post_id: int = Field(gt=0)
 
 
 class PostBase(BaseModel):
@@ -14,7 +18,6 @@ class PostBase(BaseModel):
 
 class PostResponse(BaseModel):
     post_id: int
-    content: str
 
 
 class PostCreateRequest(PostBase):
