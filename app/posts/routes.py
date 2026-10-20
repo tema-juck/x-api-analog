@@ -25,7 +25,10 @@ _post_ids = count(1)
     summary="Get a post by id",
     description="""This endpoint helps you to get a post by id""",
 )
-def get_post(service: PostServiceDeps, path: PostPath = Depends()):  # noqa: B008
+def get_post(
+    service: PostServiceDeps,
+    path: PostPath = Depends(),  # noqa: B008
+):
     res = service.get_post(path.post_id)
     return PostResponse(post_id=res)
 
