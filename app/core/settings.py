@@ -2,7 +2,7 @@ from typing import Annotated
 from urllib.parse import urlparse
 
 from fastapi import Depends, Request
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -32,7 +32,7 @@ class Settings(BaseSettings):
 
     database_url: str
     jwt_secret: str
-    minimal_post_debounce_time: int
+    minimal_post_debounce_time: int = Field(gt=0)
 
     @property
     def app(self) -> AppSetting:

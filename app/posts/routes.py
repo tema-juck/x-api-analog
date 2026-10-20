@@ -3,8 +3,6 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Path
 
-from app.core.settings import SettingsDeps
-
 from .schema import (
     PostCreateRequest,
     PostCreateResponse,
@@ -29,13 +27,9 @@ _post_ids = count(1)
 )
 def get_post(
     service: PostServiceDeps,
-    settings: SettingsDeps,
     path: PostPath = Depends(),  # noqa: B008
 ):
     res = service.get_post(path.post_id)
-    print(settings.db.url)
-    print(settings.auth.jwt_secret)
-    print(settings.debounce.minimal_post_debounce_time)
     return PostResponse(post_id=res)
 
 
