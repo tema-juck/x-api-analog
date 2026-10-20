@@ -1,3 +1,4 @@
+import logging
 from itertools import count
 from typing import Annotated
 
@@ -18,6 +19,8 @@ router = APIRouter(prefix="/v1/posts", tags=["Posts"])
 PostId = Annotated[int, Path(gt=0)]
 _post_ids = count(1)
 
+logger = logging.getLogger(__name__)
+
 
 @router.get(
     "/{post_id}",
@@ -30,6 +33,7 @@ def get_post(
     path: PostPath = Depends(),  # noqa: B008
 ):
     res = service.get_post(path.post_id)
+    logger.info("ID: %s", res)
     return PostResponse(post_id=res)
 
 
