@@ -33,7 +33,7 @@ def get_post(
     path: PostPath = Depends(),  # noqa: B008
 ):
     res = service.get_post(path.post_id)
-    logger.info("ID: %s", res)
+    logger.info("ID: %s", path.post_id)
     return PostResponse(post_id=res)
 
 
