@@ -6,7 +6,7 @@ class PostPath(BaseModel):
 
 
 class PostBase(BaseModel):
-    content: str
+    content: str = Field(max_length=280)
 
     @field_validator("content")
     @classmethod
