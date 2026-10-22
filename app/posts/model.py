@@ -9,7 +9,7 @@ from app.core.db import Base
 class Post(Base):
     __tablename__ = "posts"
 
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    post_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     content: Mapped[str] = mapped_column(String(280), nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
@@ -19,3 +19,6 @@ class Post(Base):
     )
     likes_count: Mapped[int] = mapped_column(Integer, server_default="0")
     is_deleted: Mapped[bool] = mapped_column(Boolean, server_default=false())
+
+    def __init__(self, content: str):
+        self.content = content
