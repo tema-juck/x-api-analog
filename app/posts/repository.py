@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from fastapi import Depends
-from sqlalchemy import desc, select
+from sqlalchemy import desc, select, update
 from sqlalchemy.sql.functions import count
 
 from app.core.db import DbSessionDeps
@@ -50,6 +50,20 @@ class PostRepository:
         result = await self.session.execute(query)
         posts = list(result.scalars().all())
         return posts, total, deleted_total
+
+    async def like(self, post_id: int):
+        query = (
+            update(Post)
+            .where(Post.post_id == post_id, Post.is_deleted.is_(False))
+            .values(likes_count=Post.likes_count + 1)
+            .returning(Post)
+        )
+
+        result = await self.session.execute(query)
+        post = result.scalar_one_or_none()
+        await self.session.commit()
+
+        return post
 
 
 def get_post_repository(session: DbSessionDeps):

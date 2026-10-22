@@ -29,6 +29,9 @@ class PostService:
         if post is None:
             return None
 
+        if post.is_deleted:
+            return None
+
         patch = data.model_dump(exclude_unset=True)
         for field, value in patch.items():
             setattr(post, field, value)
@@ -53,13 +56,15 @@ class PostService:
         )
 
     async def like(self, post_id: int):
-        post = await self.repo.get_by_id(post_id)
+        post = await self.repo.like(post_id)
 
         if post is None:
             return None
 
-        post.likes_count += 1
-        return await self.repo.save(post)
+        if post.is_deleted:
+            return None
+
+        return post
 
 
 PostServiceDeps = Annotated[PostService, Depends(get_post_service)]
